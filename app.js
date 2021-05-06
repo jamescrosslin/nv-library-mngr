@@ -7,7 +7,23 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
+const { sequelize } = require("./models");
+
 const app = express();
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connected to the database");
+    try {
+      await sequelize.sync();
+      console.log("Models are synced with database");
+    } catch (err) {
+      console.log("Models could not be synced: ", err);
+    }
+  } catch (err) {
+    console.error("Can't connect to the database: ", err);
+  }
+})();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
