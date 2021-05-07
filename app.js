@@ -35,23 +35,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
+app.use("/", () => {
+  throw new Error();
+});
 app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404));
+  const error = new Error();
+  error.status = 404;
+  error.message = "That page doesn't exist. Please try a different address.";
+  res.render("page-not-found", { title: "Page Not Found", error });
 });
 
 // error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+app.use(function (error, req, res, next) {
+  error.status = error.status || 500;
+  res.status(error.status);
+  res.locals.message =
+    "Sorry, we seem to be having some technical difficulties.";
+  res.render("error", { error });
 });
 
 module.exports = app;
