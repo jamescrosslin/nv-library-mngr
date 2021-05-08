@@ -63,18 +63,19 @@ router
   .get((req, res) => {
     res.render("update-book", { title: "Update Book", book: req.book });
   })
-  .post((req, res) => {
-    try {
-      res.render("update-book", {
-        title: "Book Successfully Updated",
-        book: req.book,
-      });
-    } catch (error) {
-      if (error.name === "SequelizeValidationError") {
-        res.render("update-book", { book: bookBuild, error });
+  .post(
+    asyncHandler(async (req, res) => {
+      try {
+        await req.book.update(req.body);
+        res.redirect(`/books/${req.book.id}`);
+      } catch (error) {
+        if (error.name === "SequelizeValidationError") {
+          return res.render("update-book", { book: bookBuild, error });
+        }
+        next(err);
       }
-    }
-  });
+    })
+  );
 
 router.post("/:id/delete");
 
