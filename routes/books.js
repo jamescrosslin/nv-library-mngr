@@ -70,9 +70,8 @@ router
         res.redirect(`/books/${req.book.id}`);
       } catch (error) {
         if (error.name === "SequelizeValidationError") {
-          return res.render("update-book", { book: bookBuild, error });
+          res.render("update-book", { book: bookBuild, error });
         }
-        next(err);
       }
     })
   );
