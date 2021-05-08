@@ -7,6 +7,8 @@ function asyncHandler(cb) {
     try {
       await cb(req, res, next);
     } catch (err) {
+      const reason = err.reason || "";
+      err.message = `There was an issue with your book request. ${reason}`;
       next(err);
     }
   };
@@ -35,18 +37,30 @@ router
         res.redirect(`/book/${book.id}`);
       } catch (error) {
         if (error.name === "SequelizeValidationError") {
-          res.render("new-book", {});
+          res.render("new-book", { book: bookBuild, error });
         }
       }
     })
   );
 
-router.param("id", async (req, res, next, id) => {
-  const book = await Book.findByPk(id);
-  next();
-});
+router.param(
+  "id",
+  asyncHandler(async (req, res, next, id) => {
+    try {
+      const book = await Book.findByPk(id);
+      req.id = book;
+      next();
+    } catch (err) {
+      err.reason = "Cannot find a book with that id.";
+      next(err);
+    }
+  })
+);
 
-router.route("/:id").get().post();
+router
+  .route("/:id")
+  .get((req, res) => {})
+  .post();
 
 router.post("/:id/delete");
 
