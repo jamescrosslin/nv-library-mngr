@@ -31,7 +31,8 @@ router
   })
   .post(
     asyncHandler(async ({ body }, res) => {
-      const bookBuild = await Book.build({ ...body });
+      // under the impression that build method is synchronous
+      const bookBuild = Book.build({ ...body });
       try {
         const book = await newBook.save();
         res.redirect(`/book/${book.id}`);
@@ -48,7 +49,7 @@ router.param(
   asyncHandler(async (req, res, next, id) => {
     try {
       const book = await Book.findByPk(id);
-      req.id = book;
+      req.book = book;
       next();
     } catch (err) {
       err.reason = "Cannot find a book with that id.";
@@ -59,8 +60,21 @@ router.param(
 
 router
   .route("/:id")
-  .get((req, res) => {})
-  .post();
+  .get((req, res) => {
+    res.render("update-book", { title: "Update Book", book: req.book });
+  })
+  .post("update-book", (req, res) => {
+    try {
+      res.render("update-book", {
+        title: "Book Successfully Updated",
+        book: req.book,
+      });
+    } catch (error) {
+      if (error.name === "SequelizeValidationError") {
+        res.render("update-book", { book: bookBuild, error });
+      }
+    }
+  });
 
 router.post("/:id/delete");
 
