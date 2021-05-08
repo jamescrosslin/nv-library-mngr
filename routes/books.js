@@ -63,7 +63,7 @@ router
   .get((req, res) => {
     res.render("update-book", { title: "Update Book", book: req.book });
   })
-  .post("update-book", (req, res) => {
+  .post((req, res) => {
     try {
       res.render("update-book", {
         title: "Book Successfully Updated",
