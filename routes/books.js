@@ -45,24 +45,23 @@ router
     }),
   );
 
-router.param(
-  'id',
-  asyncHandler(async (req, res, next, id) => {
-    try {
-      const book = await Book.findByPk(id);
+router.param('id', async (req, res, next, id) => {
+  try {
+    const book = await Book.findByPk(id);
+    if (book) {
       req.book = book;
       next();
-    } catch (err) {
-      err.reason = 'Cannot find a book with that id.';
-      next(err);
     }
-  }),
-);
+    throw new Error('Cannot find a book with that id.');
+  } catch (err) {
+    next(err);
+  }
+});
 
 router
   .route('/:id')
   .get((req, res) => {
-    res.render('update-book', { title: 'Update Book', book: req.book });
+    res.render('update-book', { title: 'Update Book', book: req.book, message: res.locals.message });
   })
   .post(
     asyncHandler(async (req, res) => {
@@ -77,6 +76,16 @@ router
     }),
   );
 
-router.post('/:id/delete');
+router.post(
+  '/:id/delete',
+  asyncHandler(async (req, res) => {
+    const didDelete = await req.book.destroy();
+    if (didDelete) {
+      res.redirect('/books');
+    }
+    res.locals.message = `Delete failed. Make sure book with id ${req.book.id} exists.`;
+    res.redirect(`/books/${req.id}`);
+  }),
+);
 
 module.exports = router;
