@@ -36,7 +36,7 @@ router
       const bookBuild = Book.build({ ...body });
       try {
         const book = await bookBuild.save();
-        res.redirect(`/book/${book.id}`);
+        res.redirect(`/books/${book.id}`);
       } catch (error) {
         if (error.name === 'SequelizeValidationError') {
           res.render('new-book', { book: bookBuild, error });
@@ -51,8 +51,9 @@ router.param('id', async (req, res, next, id) => {
     if (book) {
       req.book = book;
       next();
+    } else {
+      throw new Error('Cannot find a book with that id.');
     }
-    throw new Error('Cannot find a book with that id.');
   } catch (err) {
     next(err);
   }
