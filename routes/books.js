@@ -68,10 +68,10 @@ router
     asyncHandler(async (req, res) => {
       try {
         await req.book.update(req.body);
-        res.redirect(`/books/${req.book.id}`);
+        res.redirect('/books');
       } catch (error) {
         if (error.name === 'SequelizeValidationError') {
-          res.render('update-book', { book: req.book, error });
+          res.render('update-book', { book: req.book, errors: error.errors });
         }
       }
     }),
@@ -83,9 +83,10 @@ router.post(
     const didDelete = await req.book.destroy();
     if (didDelete) {
       res.redirect('/books');
+    } else {
+      res.locals.message = `Delete failed. Make sure book with id ${req.book.id} exists.`;
+      res.redirect(`/books/${req.id}`);
     }
-    res.locals.message = `Delete failed. Make sure book with id ${req.book.id} exists.`;
-    res.redirect(`/books/${req.id}`);
   }),
 );
 
