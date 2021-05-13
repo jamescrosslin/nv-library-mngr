@@ -1,0 +1,15 @@
+mixin bookForm(route, type, book={})
+  form(method="POST" action=`${route}`)
+    p
+      label(for="title") Title
+      input(name="title" value=`${book.title || ""}`) 
+    p 
+      label(for="author") Author
+      input(name="author" value=`${book.author || ""}`) 
+    p 
+      label(for="genre") Genre
+      input(name="genre" value=`${book.genre || ""}`) 
+    p 
+      label(for="year") Year
+      input(name="year" value=`${book.year || ""}`) 
+    button(type="submit")= type
