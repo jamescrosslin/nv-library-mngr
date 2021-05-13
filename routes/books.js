@@ -31,15 +31,17 @@ router
     res.render('new-book');
   })
   .post(
-    asyncHandler(async ({ body }, res) => {
+    asyncHandler(async ({ body }, res, next) => {
       // under the impression that build method is synchronous
       const bookBuild = Book.build({ ...body });
       try {
-        const book = await bookBuild.save();
-        res.redirect(`/books/${book.id}`);
+        await bookBuild.save();
+        res.redirect('/books');
       } catch (error) {
         if (error.name === 'SequelizeValidationError') {
-          res.render('new-book', { book: bookBuild, error });
+          res.render('new-book', { book: bookBuild, errors: error.errors });
+        } else {
+          next(error);
         }
       }
     }),
