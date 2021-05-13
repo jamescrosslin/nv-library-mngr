@@ -3,5 +3,13 @@ extends layout
 block content
   h1= title
   br
-  p= book.title
-  p= book.author
+  if errors
+    each error in errors
+      p= error.message
+  br
+  +bookForm(`/books/${book.id}`, book)
+  p
+    a.button(href='/') Cancel
+  form(method="POST" action=`/books/${book.id}/delete`)
+    button(type="submit") Delete
+  
