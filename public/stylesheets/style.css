@@ -1,6 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  padding: 10px 50px 50px;
   font: 18px 'Garamond', serif;
+  background-image: linear-gradient(to right, rgba(240, 234, 234, 1), rgba(240, 234, 234, 0.3)),
+    url(/images/books_background.jpeg);
+  background-size: cover;
+  min-height: fit-content;
+}
+
+main {
+  margin: 3vh 2vh;
+  padding: 2vh 1vw;
+  background-image: linear-gradient(to right, rgba(240, 234, 234, 0.9), rgba(240, 234, 234, 0.9));
+  border-radius: 2em;
+  width: fit-content;
 }
 
 a {
@@ -72,6 +87,13 @@ tr:nth-child(2n) {
 
 td {
   padding: 5px 20px 5px 10px;
+}
+
+td:first-child::after {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  min-height: 60px;
 }
 
 label {
