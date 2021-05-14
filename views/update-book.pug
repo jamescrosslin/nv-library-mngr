@@ -2,14 +2,8 @@ extends layout
 
 block content
   h1= title
-  br
-  if errors
-    each error in errors
-      p= error.message
-  br
+  include ./partials/validation-errors
   +bookForm(`/books/${book.id}`, "Update Book", book)
-  p
-    a.button(href='/') Cancel
   form(method="POST" action=`/books/${book.id}/delete`)
-    button(type="submit") Delete
+    input(type="submit" value="Delete")
   
