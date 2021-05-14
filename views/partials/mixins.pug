@@ -12,4 +12,6 @@ mixin bookForm(route, type, book={})
     p 
       label(for="year") Year
       input(name="year" value=`${book.year || ""}`) 
-    button(type="submit")= type
+    input(type="submit" value=`${type}`)
+    p
+      a.button(href='/books') Cancel
