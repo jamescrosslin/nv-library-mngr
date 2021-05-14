@@ -7,7 +7,7 @@ block content
     each error in errors
       p= error.message
   br
-  +bookForm(`/books/${book.id}`, book)
+  +bookForm(`/books/${book.id}`, "Update Book", book)
   p
     a.button(href='/') Cancel
   form(method="POST" action=`/books/${book.id}/delete`)
