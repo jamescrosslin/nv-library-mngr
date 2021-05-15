@@ -1,5 +1,8 @@
 const express = require('express');
-const { Book } = require('../models');
+const {
+  Book,
+  Sequelize: { Op },
+} = require('../models');
 
 const router = express.Router();
 
@@ -19,8 +22,23 @@ function asyncHandler(cb) {
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const books = await Book.findAll();
-    res.render('index', { title: 'Books', books });
+    const queryTerm = req.query.q || '';
+    const searchConditions = ['title', 'author', 'genre', 'year'].map((column) => ({
+      [column]: { [Op.substring]: queryTerm },
+    }));
+    const offset = req.query.page || 0;
+    const books = await Book.findAll({
+      where: { [Op.or]: searchConditions },
+      offset: offset * 5,
+      limit: 6,
+    });
+    const more = books.length === 6;
+    res.render('index', {
+      title: 'Books',
+      books: books.slice(0, 5),
+      offset,
+      more,
+    });
   }),
 );
 
@@ -64,7 +82,11 @@ router.param('id', async (req, res, next, id) => {
 router
   .route('/:id')
   .get((req, res) => {
-    res.render('update-book', { title: 'Update Book', book: req.book, message: res.locals.message });
+    res.render('update-book', {
+      title: 'Update Book',
+      book: req.book,
+      message: res.locals.message,
+    });
   })
   .post(
     asyncHandler(async (req, res) => {
