@@ -51,6 +51,7 @@ input[type='submit'] {
 }
 
 a.button:hover,
+a.active,
 input[type='submit']:hover {
   background-color: #01b189;
 }
@@ -119,4 +120,12 @@ input[type='text'] {
 
 .error {
   color: rgb(236, 15, 15);
+}
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+a.page {
+  margin: 0 0.5em;
 }
