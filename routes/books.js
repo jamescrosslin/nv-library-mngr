@@ -2,6 +2,7 @@ const express = require('express');
 const {
   Book,
   Sequelize: { Op },
+  sequelize,
 } = require('../models');
 
 const router = express.Router();
@@ -23,21 +24,29 @@ router.get(
   '/',
   asyncHandler(async (req, res) => {
     const queryTerm = req.query.q || '';
+    const offset = req.query.page - 1 || 0;
+    if (offset < 0) return res.redirect('/page-not-found');
     const searchConditions = ['title', 'author', 'genre', 'year'].map((column) => ({
       [column]: { [Op.substring]: queryTerm },
     }));
-    const offset = req.query.page || 0;
+    const [
+      {
+        dataValues: { count },
+      },
+    ] = await Book.findAll({
+      attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'count']],
+    });
     const books = await Book.findAll({
       where: { [Op.or]: searchConditions },
       offset: offset * 5,
-      limit: 6,
+      limit: 5,
     });
-    const more = books.length === 6;
-    res.render('index', {
+    return res.render('index', {
       title: 'Books',
       books: books.slice(0, 5),
-      offset,
-      more,
+      page: req.query.page,
+      queryTerm,
+      count,
     });
   }),
 );
