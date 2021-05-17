@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  h1= title
   include ./partials/validation-errors
   +bookForm(`/books/${book.id}`, "Update Book", book)
   form(method="POST" action=`/books/${book.id}/delete`)

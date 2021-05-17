@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  h1 New Book
   include ./partials/validation-errors
   +bookForm("/books/new", "Create Book", book)
     p
