@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
@@ -39,7 +41,7 @@ app.use('/', indexRouter);
 app.use('/books', booksRouter);
 
 // catch 404 and forward to error handler
-app.use((req, res) => {
+app.use((_req, res) => {
   const error = new Error();
   error.status = 404;
   error.message = "That page doesn't exist. Please try a different address.";
@@ -47,12 +49,11 @@ app.use((req, res) => {
 });
 
 // error handler
-app.use((error, req, res) => {
-  // eslint-disable-next-line no-param-reassign
+app.use((error, _req, res, _next) => {
   error.status = error.status || 500;
   res.status(error.status);
-  res.locals.message = 'Sorry, we seem to be having some technical difficulties.';
-  res.render('error', { error });
+  res.locals.message = error.message || 'Sorry, we seem to be having some technical difficulties.';
+  res.render('error', { title: 'An error has occured.', error });
 });
 
 module.exports = app;
