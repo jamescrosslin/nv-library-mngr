@@ -18,7 +18,7 @@ function asyncHandler(cb) {
   };
 }
 
-/* GET users listing. */
+/* GET books listing. */
 router.get(
   '/',
   asyncHandler(async ({ query }, res) => {
@@ -74,7 +74,9 @@ router.param('id', async (req, res, next, id) => {
       req.book = book;
       next();
     } else {
-      throw new Error('Cannot find a book with that id.');
+      const error = new Error('Cannot find a book with that id.');
+      error.status = 404;
+      throw error;
     }
   } catch (err) {
     next(err);
@@ -97,7 +99,7 @@ router
         res.redirect('/books');
       } catch (error) {
         if (error.name === 'SequelizeValidationError') {
-          res.render('update-book', { book: req.book, errors: error.errors });
+          res.render('update-book', { title: 'Update Book', book: req.book, errors: error.errors });
         }
       }
     }),
