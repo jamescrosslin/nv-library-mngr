@@ -1,8 +1,10 @@
 extends layout
 
 block content 
-  h1 Page Not Found
   p= error.message
-  br
+  figure
+    img(src=`/images/404.png` alt='A broken robot with error on its screen and large floating 404 numbers.')
+    figcaption
+      a(href='http://storyset.com/web' target='_blank' rel='noopener noreferrer') Illustration by Freepik Storyset
   p
     a.button(href='/books') Home

@@ -1,6 +1,10 @@
 extends layout
 
 block content
-  h1 Server Error
-  h2 Sorry, there was an unexpected error on the server!
-  p= `${error.status} Error: ${error.message}`
+  p= `${error.status} Error: ${message}`
+  figure
+    img(src=`/images/error.png` alt='A broken robot with error on its screen and large floating 404 numbers.')
+    figcaption
+      a(href='http://storyset.com/web' target='_blank' rel='noopener noreferrer') Illustration by Freepik Storyset
+  p
+    a.button(href='/books') Home
