@@ -11,11 +11,12 @@ body {
 }
 
 main {
-  margin: 3vh 2vh;
+  margin: clamp(16px, 3vh, 50px);
   padding: 2vh 1vw;
   background-image: linear-gradient(to right, rgba(240, 234, 234, 0.9), rgba(240, 234, 234, 0.9));
   border-radius: 2em;
-  width: fit-content;
+  width: clamp(350px, 95%, 750px);
+  box-shadow: 2px 4px 10px 4px rgb(8, 103, 58);
 }
 
 a {
@@ -30,7 +31,8 @@ a:hover {
 }
 
 a.button,
-input[type='submit'] {
+input[type='submit'],
+.searchbar button {
   color: white;
   background: #019875;
   font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
@@ -52,7 +54,8 @@ input[type='submit'] {
 
 a.button:hover,
 a.active,
-input[type='submit']:hover {
+input[type='submit']:hover,
+button:hover {
   background-color: #01b189;
 }
 
@@ -97,14 +100,14 @@ td:first-child::after {
   min-height: 60px;
 }
 
-label {
+p label {
   font-weight: bold;
   min-width: 130px;
   display: inline-block;
   transition: 0.4s;
 }
 
-input {
+p input {
   padding: 10px;
   font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -113,7 +116,7 @@ input {
   transition: 0.4s;
 }
 
-input[type='text'] {
+p input[type='text'] {
   margin-left: 7px;
   width: 300px;
 }
@@ -121,11 +124,42 @@ input[type='text'] {
 .error {
   color: rgb(236, 15, 15);
 }
+
 footer {
   display: flex;
   justify-content: center;
+  padding: 1rem 0;
 }
 
 a.page {
   margin: 0 0.5em;
+}
+
+.searchbar {
+  margin: auto;
+  width: clamp(200px);
+  height: 2rem;
+  text-align: right;
+}
+
+.searchbar * {
+  height: 100%;
+  vertical-align: middle;
+  right: 0;
+}
+
+.searchbar input {
+  border-right: none;
+  width: clamp(300px, 70%, 90%);
+}
+
+.searchbar button {
+  border-left: none;
+  text-align: center;
+  padding: revert;
+  transition: 0.4s;
+}
+
+table {
+  margin: auto;
 }
