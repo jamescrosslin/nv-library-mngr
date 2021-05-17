@@ -4,9 +4,8 @@ block content
 
   header 
     h1= title
-    form(action="/books" method="GET")
-      label(for="q") Search: 
-      input(name="q")
+    form.searchbar(action="/books" method="GET")
+      input(name="q" placeholder="Search for a title, author, genre, or year...")
       button(type="submit") Search
   br
   p
