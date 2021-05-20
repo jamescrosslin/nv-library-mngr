@@ -23,23 +23,16 @@ router.get(
   '/',
   asyncHandler(async ({ query }, res) => {
     const queryTerm = query.q || '';
-    const page = query.page || 1;
-    const offset = (page - 1) * 5;
-
-    if (offset < 0) return res.redirect('/page-not-found');
     const searchConditions = ['title', 'author', 'genre', 'year'].map((column) => ({
       [column]: { [Op.substring]: queryTerm },
     }));
     const books = await Book.findAll({
       where: { [Op.or]: searchConditions },
     });
-    if (offset > books.length) return res.redirect('/page-not-found');
     return res.render('index', {
       title: 'Books',
-      books: books.slice(offset, offset + 5),
-      page,
+      books,
       queryTerm,
-      count: books.length,
     });
   }),
 );
@@ -48,7 +41,7 @@ router
   .route('/new')
   .get((req, res) => {
     // create a new books form view
-    res.render('new-book');
+    res.render('new-book', { title: 'New Book' });
   })
   .post(
     asyncHandler(async ({ body }, res, next) => {
