@@ -1,4 +1,38 @@
 /*
+ * Pre-Styles
+ */
+
+table {
+  margin: auto;
+  visibility: hidden;
+}
+
+th {
+  border-bottom: 2px solid #d8b493;
+  text-align: left;
+  padding: 5px 20px 5px 10px;
+}
+
+tr {
+  min-height: 50px;
+}
+
+tr.even {
+  background: #e7e7e7;
+}
+
+td {
+  padding: 5px 20px 5px 10px;
+}
+
+td:first-child::after {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  min-height: 60px;
+}
+
+/*
  * Table styles
  */
 table.dataTable {
@@ -7,6 +41,7 @@ table.dataTable {
   clear: both;
   border-collapse: separate;
   border-spacing: 0;
+  visibility: visible;
   /*
    * Header and footer styles
    */
@@ -309,8 +344,9 @@ table.dataTable td {
   border: 1px solid #aaa;
   border-radius: 3px;
   padding: 5px;
-  background-color: transparent;
-  padding: 4px;
+  background-color: white;
+  vertical-align: middle;
+  margin-bottom: 2px;
 }
 .dataTables_wrapper .dataTables_filter {
   float: right;
@@ -344,8 +380,6 @@ table.dataTable td {
   cursor: pointer;
   *cursor: hand;
   color: #fff !important;
-  border: 1px solid transparent;
-  border-radius: 2px;
   background-color: #019875;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.current,

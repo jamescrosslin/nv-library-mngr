@@ -4,19 +4,18 @@
 
 body {
   font: 1.3em 'Helvetica';
-  background-image: linear-gradient(to right, rgba(240, 234, 234, 1), rgba(240, 234, 234, 0.3)),
+  background-image: linear-gradient(to right, rgba(124, 124, 124, 0.8), rgba(124, 124, 124, 0.3)),
     url(/images/books_background.jpeg);
   background-size: cover;
   min-height: fit-content;
 }
 
 main {
-  margin: clamp(16px, 3vh, 100px);
-  padding: 2vh 3vw;
+  margin: 2vh auto;
+  padding: 2vh 3vw 3vh;
   background-color: #f0eaea;
-  border-radius: 2em;
-  width: clamp(750px, 900px, 90%);
   box-shadow: 2px 4px 10px 4px rgb(8, 103, 58);
+  width: fit-content;
 }
 
 a {
@@ -51,8 +50,23 @@ input[type='submit'] {
 input[type='submit'] {
   border: 0;
 }
-.create {
+
+p.create,
+h1 {
+  display: inline-block;
+  width: 50%;
+  font-size: 2em;
+}
+
+p.create {
   text-align: right;
+  line-height: 1.2em;
+  height: 100%;
+}
+
+p.create .button {
+  font-size: 0.4em;
+  padding: 20px 25px;
 }
 
 a.button:hover,
@@ -78,31 +92,6 @@ h2 {
   padding-top: 20px;
 }
 
-th {
-  border-bottom: 2px solid #d8b493;
-  text-align: left;
-  padding: 5px 20px 5px 10px;
-}
-
-tr {
-  min-height: 50px;
-}
-
-tr.even {
-  background: #e7e7e7;
-}
-
-td {
-  padding: 5px 20px 5px 10px;
-}
-
-td:first-child::after {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  min-height: 60px;
-}
-
 p label {
   font-weight: bold;
   min-width: 130px;
@@ -117,6 +106,7 @@ p input {
   border-radius: 2px;
   border-color: #e7e7e7;
   transition: 0.4s;
+  min-width: 300px;
 }
 
 p input[type='text'] {
@@ -139,7 +129,7 @@ a.page {
 }
 
 .searchbar {
-  margin: auto;
+  margin: 2vh auto;
   height: 3rem;
   text-align: right;
 }
@@ -163,10 +153,6 @@ form.searchbar * {
   padding: revert;
   transition: 0.4s;
   width: 17%;
-}
-
-table {
-  margin: auto;
 }
 
 figure,
