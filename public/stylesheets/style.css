@@ -3,7 +3,7 @@
 }
 
 body {
-  font: 1.3em 'Garamond', serif;
+  font: 1.3em 'Helvetica';
   background-image: linear-gradient(to right, rgba(240, 234, 234, 1), rgba(240, 234, 234, 0.3)),
     url(/images/books_background.jpeg);
   background-size: cover;
@@ -13,7 +13,7 @@ body {
 main {
   margin: clamp(16px, 3vh, 100px);
   padding: 2vh 3vw;
-  background-image: linear-gradient(to right, rgba(240, 234, 234, 0.9), rgba(240, 234, 234, 0.9));
+  background-color: #f0eaea;
   border-radius: 2em;
   width: clamp(750px, 900px, 90%);
   box-shadow: 2px 4px 10px 4px rgb(8, 103, 58);
@@ -51,6 +51,9 @@ input[type='submit'] {
 input[type='submit'] {
   border: 0;
 }
+.create {
+  text-align: right;
+}
 
 a.button:hover,
 a.active,
@@ -85,7 +88,7 @@ tr {
   min-height: 50px;
 }
 
-tr:nth-child(2n) {
+tr.even {
   background: #e7e7e7;
 }
 
@@ -137,19 +140,21 @@ a.page {
 
 .searchbar {
   margin: auto;
-  height: 2rem;
+  height: 3rem;
   text-align: right;
 }
 
-.searchbar * {
+form.searchbar * {
   height: 100%;
   vertical-align: middle;
-  right: 0;
+  border: none;
+  font-size: 1em;
 }
 
 .searchbar input {
   border-right: none;
-  width: clamp(300px, 70%, 90%);
+  width: 83%;
+  padding-left: 2%;
 }
 
 .searchbar button {
@@ -157,6 +162,7 @@ a.page {
   text-align: center;
   padding: revert;
   transition: 0.4s;
+  width: 17%;
 }
 
 table {
