@@ -16,6 +16,7 @@ main {
   background-color: #f0eaea;
   box-shadow: 2px 4px 10px 4px rgb(8, 103, 58);
   width: fit-content;
+  min-width: 600px;
 }
 
 a {
