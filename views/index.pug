@@ -1,14 +1,14 @@
 extends layout
 
 block content
+  p.create
+    a.button(href='/books/new') Create New Book
   form.searchbar(action="/books" method="GET")
     input(name="q" placeholder="Search for a title, author, genre, or year...")
     button(type="submit") Search
   br
-  p
-    a.button(href='/books/new') Create New Book
   if books.length != 0
-    table(data-books=books)
+    table(id='books' class='stripe')
       thead
         tr
           th Title
@@ -16,7 +16,7 @@ block content
           th Genre
           th Year
       tbody
-        each book in books.slice(0,5)
+        each book in books
           tr
             td
               a(href=`/books/${book.id}`)= book.title
@@ -25,12 +25,9 @@ block content
             td= book.year
   else
     p Sorry, no books matched your search for #{queryTerm}!
-  footer
-    - var pageCount = 1;
-    while pageCount <= Math.ceil(count/5)
-      a.button(href=`/books?q=${queryTerm}&page=${pageCount}` class=`page ${ page == pageCount ? 'active' : '' }`)= pageCount++
   if queryTerm 
     p
       a.button(href='/books') Home
+  script(src="javascripts/main.js")
 
 
