@@ -3,15 +3,16 @@ html
   head
     title= title
     link(rel='stylesheet' href='/stylesheets/reset.css')
+    //- importing jQuery and DataTables library
     script(
       src="https://code.jquery.com/jquery-3.6.0.slim.min.js" 
       integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" 
       crossorigin="anonymous")
-    script(src='https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js')    
+    script(src='https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js')
+
     link(rel='stylesheet' href='/stylesheets/style.css')
     link(rel='stylesheet' href='/stylesheets/table.css')
   body
     main
       h1= title
-      include ./partials/mixins
       block content

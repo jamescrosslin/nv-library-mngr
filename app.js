@@ -11,6 +11,8 @@ const booksRouter = require('./routes/books.js');
 const { sequelize } = require('./models');
 
 const app = express();
+
+// authentication and syncronization of library db
 (async () => {
   try {
     await sequelize.authenticate();
@@ -38,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/books', booksRouter);
 
-// catch 404 and forward to error handler
+// 404 error handler
 app.use((_req, res) => {
   const error = new Error();
   error.status = 404;

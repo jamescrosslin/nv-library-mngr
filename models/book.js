@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     // static associate(models) {
-    // define association here
     // }
   }
   Book.init(
@@ -32,7 +31,14 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       genre: DataTypes.STRING,
-      year: DataTypes.INTEGER,
+      year: {
+        type: DataTypes.INTEGER,
+        validate: {
+          isInt: {
+            msg: 'Year must be a whole number. Please enter a valid integer.',
+          },
+        },
+      },
     },
     {
       sequelize,

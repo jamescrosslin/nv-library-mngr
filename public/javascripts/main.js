@@ -1,10 +1,10 @@
+/* eslint-disable no-undef */
 $(document).ready(() => {
-  console.log('running');
+  // jQuery function for loading DataTable
   $('#books').DataTable({
+    // removes default table search
     searching: false,
-    lengthMenu: [
-      [5, 10, 25, -1],
-      [5, 10, 25, 'All'],
-    ],
+    // sets selectable pagination increment
+    lengthMenu: [5, 10, 25],
   });
 });

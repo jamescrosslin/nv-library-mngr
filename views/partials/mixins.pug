@@ -1,3 +1,4 @@
+//- creates a book form either with or without values
 mixin bookForm(route, type, book={})
   form(method="POST" action=`${route}`)
     p
@@ -11,7 +12,8 @@ mixin bookForm(route, type, book={})
       input(name="genre" value=`${book.genre || ""}`) 
     p 
       label(for="year") Year
-      input(name="year" value=`${book.year || ""}`) 
+      //- prevents books written in the year zero from failing to render
+      input(name="year" value=`${ book.year || book.year === 0 ? book.year : ""}`) 
     input(type="submit" value=`${type}`)
     p
       a.button(href='/books') Cancel

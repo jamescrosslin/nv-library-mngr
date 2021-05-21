@@ -2,6 +2,7 @@ extends layout
 
 block content
   include ./partials/validation-errors
+  include ./partials/mixins
   +bookForm(`/books/${book.id}`, "Update Book", book)
   form(method="POST" action=`/books/${book.id}/delete`)
     input(type="submit" value="Delete")

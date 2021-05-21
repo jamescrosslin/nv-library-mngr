@@ -23,10 +23,12 @@ router.get(
   '/',
   asyncHandler(async ({ query }, res) => {
     const queryTerm = query.q || '';
+    // sets a partial match search for each column in the array
     const searchConditions = ['title', 'author', 'genre', 'year'].map((column) => ({
       [column]: { [Op.substring]: queryTerm },
     }));
     const books = await Book.findAll({
+      // each column checks a match independently with OR logic
       where: { [Op.or]: searchConditions },
     });
     return res.render('index', {
@@ -38,21 +40,24 @@ router.get(
 );
 
 router
+  // all chained methods are for the /new route
   .route('/new')
-  .get((req, res) => {
-    // create a new books form view
+  .get((_req, res) => {
     res.render('new-book', { title: 'New Book' });
   })
   .post(
     asyncHandler(async ({ body }, res, next) => {
-      // under the impression that build method is synchronous
+      /*
+       * did cost/benefit analysis on create then build on failure
+       * or build once and check for save success, went with build once
+       */
       const bookBuild = Book.build({ ...body });
       try {
         await bookBuild.save();
         res.redirect('/books');
       } catch (error) {
         if (error.name === 'SequelizeValidationError') {
-          res.render('new-book', { book: bookBuild, errors: error.errors });
+          res.render('new-book', { title: 'New Book', book: bookBuild, errors: error.errors });
         } else {
           next(error);
         }
@@ -60,10 +65,16 @@ router
     }),
   );
 
-router.param('id', async (req, res, next, id) => {
+/*
+ * using .param allows me to handle id parsing and searching
+ * for book by id in one place, standardizing process
+ * and reducing errors while staying DRY across routes that use id
+ */
+router.param('id', async (req, _res, next, id) => {
   try {
     const book = await Book.findByPk(id);
     if (book) {
+      // req will carry the book property along to next middleware
       req.book = book;
       next();
     } else {
@@ -92,6 +103,7 @@ router
         res.redirect('/books');
       } catch (error) {
         if (error.name === 'SequelizeValidationError') {
+          // renders same update-book template with errors on a validation failure
           res.render('update-book', { title: 'Update Book', book: req.book, errors: error.errors });
         }
       }
@@ -100,13 +112,16 @@ router
 
 router.post(
   '/:id/delete',
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
+    // returns a number of destoryed rows, 0 or greater
     const didDelete = await req.book.destroy();
+    // 0 rows deleted registers falsey, so would skip to else on failure
     if (didDelete) {
       res.redirect('/books');
     } else {
-      res.locals.message = `Delete failed. Make sure book with id ${req.book.id} exists.`;
-      res.redirect(`/books/${req.id}`);
+      const error = new Error();
+      error.message = `Could not delete the book with id ${req.book.id}`;
+      next(error);
     }
   }),
 );

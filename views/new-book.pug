@@ -2,6 +2,7 @@ extends layout
 
 block content
   include ./partials/validation-errors
+  include ./partials/mixins
   +bookForm("/books/new", "Create Book", book)
     p
-      a.button(href='/') Cancel
+      a.button(href='/books') Cancel
