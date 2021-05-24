@@ -3,17 +3,17 @@ mixin bookForm(route, type, book={})
   form(method="POST" action=`${route}`)
     p
       label(for="title") Title
-      input(name="title" value=`${book.title || ""}`) 
+      input(id="title" name="title" value=`${book.title || ""}`) 
     p 
       label(for="author") Author
-      input(name="author" value=`${book.author || ""}`) 
+      input(id="author" name="author" value=`${book.author || ""}`) 
     p 
       label(for="genre") Genre
-      input(name="genre" value=`${book.genre || ""}`) 
+      input(id="genre" name="genre" value=`${book.genre || ""}`) 
     p 
       label(for="year") Year
       //- prevents books written in the year zero from failing to render
-      input(name="year" value=`${ book.year || book.year === 0 ? book.year : ""}`) 
+      input(id="year" name="year" value=`${ book.year || book.year === 0 ? book.year : ""}`) 
     input(type="submit" value=`${type}`)
     p
       a.button(href='/books') Cancel
