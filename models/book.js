@@ -31,14 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       genre: DataTypes.STRING,
-      year: {
-        type: DataTypes.INTEGER,
-        validate: {
-          isInt: {
-            msg: 'Year must be a whole number. Please enter a valid integer.',
-          },
-        },
-      },
+      year: DataTypes.INTEGER,
     },
     {
       sequelize,
