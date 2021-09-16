@@ -9,9 +9,6 @@ NVLBM uses a number of open source projects to work properly:
 - [morgan] - simple logger for Node.js
 - [Sequelize] - promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server
 - [SQLite3] - small, fast local database engine
-- [jQuery] - library that simplifies DOM manipulation
-- [Pugjs] - robust, elegant, feature rich template engine for node.js
-- [DataTables] - jQuery library that formats and styles HTML tables
 
 ## Installation
 
@@ -68,11 +65,8 @@ MIT
 
 [//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
 [node.js]: https://nodejs.org
-[jquery]: https://jquery.com
 [@tjholowaychuk]: https://twitter.com/tjholowaychuk
 [express]: https://expressjs.com
-[datatables]: https://datatables.net
-[pugjs]: https://pugjs.org/api/getting-started.html
 [morgan]: https://github.com/expressjs/morgan#readme
 [sequelize]: https://sequelize.org/
 [sqlite3]: https://www.sqlite.org/index.html
